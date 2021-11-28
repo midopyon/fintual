@@ -1,14 +1,24 @@
-import React from "react";
-const pricesGoog = { "01/02/2000": 23, "03/02/2000": 24, "04/02/2000": 25 };
-const pricesTsla = {
-  "01/02/2000": 45,
-  "03/02/2000": 40,
-  "04/02/2000": 47,
-};
+import React, { useState } from "react";
+import styled from "styled-components";
+import PortfolioComponent from "../components/Portfolio";
+import DayPickers from "../components/DayPickers";
+import ProfitResults from "../components/ProfitResults";
+
+const MainContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const MainPage = () => {
-  // Let's asume we have a Portfolio, containing objects of type Stock
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [showResult, setShowResult] = useState(false);
 
+  // Let's asume we have a Portfolio, containing objects of type Stock
   const Portfolio = {
     stocks: [
       { name: "TSLA", qty: 12 },
@@ -18,47 +28,26 @@ const MainPage = () => {
 
   // Each of this stocks has a Price method, we use it to get the price of that stock in a given date
   // Since we haven't yet defined a stock object, lets first assume we can get it from a global function
-
-  const getStockPricePerName = (stockName, date) => {
-    switch (stockName) {
-      case "GOOG":
-        return pricesGoog[date] ? pricesGoog[date] : 0;
-      case "TSLA":
-        return pricesTsla[date] ? pricesTsla[date] : 0;
-      default:
-        return 100;
-    }
+  const handleOnClick = () => {
+    setShowResult(true);
   };
-
-  const calculateProfit = (startValue, endValue) => {
-    console.log(startValue, endValue);
-    // math formula to get profit
-    return ((endValue - startValue) / startValue) * 100;
-  };
-
-  // So now, if we want to receive the portfolio profit, first we define the function
-  const getProfit = (startDate, endDate) => {
-    var startValue = 0;
-    var endValue = 0;
-    Portfolio.stocks.forEach((stock) => {
-      startValue =
-        startValue + getStockPricePerName(stock.name, startDate) * stock.qty;
-      endValue =
-        endValue + getStockPricePerName(stock.name, endDate) * stock.qty;
-    });
-    // With the value of our portfolio in both dates, we call the helper function to calculate the profit:
-    return calculateProfit(startValue, endValue);
-  };
+  // So now, if we want to receive the portfolio profit, first we define the function getProfit
 
   return (
-    <div>
+    <MainContainer>
       helloooo from main page
-      <div>
-        {Portfolio.stocks[0].name} - {Portfolio.stocks[1].name}
-      </div>
+      <PortfolioComponent stocks={Portfolio.stocks} />
+      <DayPickers setStartDate={setStartDate} setEndDate={setEndDate} />
+      <button onClick={handleOnClick}>Show me the moneyyy</button>
       <div>And the profit is!!: </div>
-      {getProfit("01/02/2000", "04/02/2000")}
-    </div>
+      {showResult && (
+        <ProfitResults
+          stocks={Portfolio.stocks}
+          startDate={startDate}
+          endDate={endDate}
+        />
+      )}
+    </MainContainer>
   );
 };
 
