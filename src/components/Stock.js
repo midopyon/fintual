@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StockContainer = styled.div`
-  width: 200px;
+  width: 150px;
   height: 100px;
   padding: 20px;
   border: 1px dashed #bdbdbd;
