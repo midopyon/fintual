@@ -20,9 +20,27 @@ By [Perla Peralta](mailto:perlap.03@gmail.com)
 
 ## requirements
 
-### Construct a simple Portfolio class that has a collection of Stocks and a "Profit" method that receives 2 ### dates and returns the profit of the Portfolio between those dates. Assume each Stock has a "Price" method that receives a date and returns its price.
+### Construct a simple Portfolio class that has a collection of Stocks and a "Profit" method that receives 2 dates and returns the profit of the Portfolio between those dates. Assume each Stock has a "Price" method that receives a date and returns its price.
 
 - The app waits for the user to pick a start date and an end date. The button will turn enabled.
-- When the button is clicked, the app calculates the value of the portfolio between the two dates using the[calculateProfit](src/utils/calculateProfit.js) function
+- When the button is clicked, the app renders the [ProfitResults](src/components/ProfitResults.js) component, which iterates through the stock array in the Portfolio object.
+- In the loop, I call the [getStockPricePerName](src/services/getStockPrice.js) service, which receives a name and a date and returns the price of the stock in that date (this is currently mocked up with json files).
+- I then multiply that stock price per the quantity of stocks (shares) the user holds. This value per share in a given date is then added up to the startValue/endValue temporal variables.
+- Finally, I calculate the value of the portfolio between the two dates using the [calculateProfit](src/utils/calculateProfit.js) function.
+
+## bonus track
+
+### Make the Profit method return the "annualized return" of the portfolio between the given dates.
+
+- For the annualized return formula we first need to calculate the years between the two selected dates. I used the helper function [getYearsBetweenDates](src/utils/getYearsBetweenDates.js).
+- With this value I call the [calculateAnnualizedReturn](src/utils/calculateAnnualizedReturn.js) which uses the formula found [here](https://www.wikihow.com/Calculate-Annualized-Portfolio-Return) (i double checked with a finance-savvy friend, too).
+- Please note this is also executed on the Render of the ProfitResult Component.
 
 ## scope
+
+some limitations we need to keep in mind:
+
+- [getStockPricePerName](src/services/getStockPrice.js) was defined as a service, but uses mocked up prices (randomized in a period of ~1y11m). For an improvement, we could call an API and return a real result using Fetch/Axios.
+- The initial values are currently hardcoded in a JSON inside the [MainPage](src/containers/MainPage.js).
+
+Hope you enjoy using this app as much as i did creating it!
