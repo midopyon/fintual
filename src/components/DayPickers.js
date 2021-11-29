@@ -12,6 +12,7 @@ const DayPickerContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: white;
+  font-family: "Poppins";
 `;
 
 const DayPickers = (props) => {

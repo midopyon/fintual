@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import styled, { css } from "styled-components";
 import PortfolioComponent from "../components/Portfolio";
 import DayPickers from "../components/DayPickers";
 import ProfitResults from "../components/ProfitResults";
@@ -26,28 +26,45 @@ const MainButton = styled.button`
   color: #005ad6;
   font-family: "Poppins";
   font-weight: 500;
+  cursor: pointer;
+  ${(props) =>
+    props.disabled &&
+    css`
+      background-color: #f5f5f5;
+      color: #dadada;
+      cursor: default;
+    `};
 `;
 
 const MainPage = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [disableButton, setDisableButton] = useState(true);
   const [showResult, setShowResult] = useState(false);
   const [yearsBetweenDates, setYearsBetweenDates] = useState(0);
 
-  // Let's asume we have a Portfolio, containing objects of type Stock
   const Portfolio = {
     stocks: [
       { name: "TSLA", qty: 12 },
       { name: "GOOG", qty: 24 },
+      { name: "AAPL", qty: 16 },
+      { name: "NVDA", qty: 13.2 },
     ],
   };
-
-  // Each of this stocks has a Price method, we use it to get the price of that stock in a given date
-  // Since we haven't yet defined a stock object, lets first assume we can get it from a global function
   const handleOnClick = () => {
     setShowResult(true);
   };
-  // So now, if we want to receive the portfolio profit, first we define the function getProfit
+
+  const checkForFields = () => {
+    const datesSelected = startDate.trim().length && endDate.trim().length;
+    if (datesSelected) {
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
+  };
+
+  useEffect(() => checkForFields());
 
   return (
     <MainContainer>
@@ -57,7 +74,9 @@ const MainPage = () => {
         setEndDate={setEndDate}
         setYearsBetweenDates={setYearsBetweenDates}
       />
-      <MainButton onClick={handleOnClick}>show me the moneyyy</MainButton>
+      <MainButton onClick={handleOnClick} disabled={disableButton}>
+        show me the moneyyy
+      </MainButton>
       {showResult && (
         <ProfitResults
           stocks={Portfolio.stocks}

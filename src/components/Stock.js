@@ -31,7 +31,7 @@ const Stock = (props) => {
   return (
     <StockContainer>
       <StockName>{name}</StockName>
-      <QtyContainer>quantity: {qty}</QtyContainer>
+      <QtyContainer>shares: {qty}</QtyContainer>
     </StockContainer>
   );
 };
