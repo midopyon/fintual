@@ -6,17 +6,33 @@ import ProfitResults from "../components/ProfitResults";
 
 const MainContainer = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
+const MainButton = styled.button`
+  border-radius: 2000px;
+  padding: 0 24px;
+  margin: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #e1e1e1;
+  height: 40px;
+  background-color: #fff;
+  color: #005ad6;
+  font-family: "Poppins";
+  font-weight: 500;
+`;
+
 const MainPage = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [showResult, setShowResult] = useState(false);
+  const [yearsBetweenDates, setYearsBetweenDates] = useState(0);
 
   // Let's asume we have a Portfolio, containing objects of type Stock
   const Portfolio = {
@@ -35,16 +51,19 @@ const MainPage = () => {
 
   return (
     <MainContainer>
-      helloooo from main page
       <PortfolioComponent stocks={Portfolio.stocks} />
-      <DayPickers setStartDate={setStartDate} setEndDate={setEndDate} />
-      <button onClick={handleOnClick}>Show me the moneyyy</button>
-      <div>And the profit is!!: </div>
+      <DayPickers
+        setStartDate={setStartDate}
+        setEndDate={setEndDate}
+        setYearsBetweenDates={setYearsBetweenDates}
+      />
+      <MainButton onClick={handleOnClick}>show me the moneyyy</MainButton>
       {showResult && (
         <ProfitResults
           stocks={Portfolio.stocks}
           startDate={startDate}
           endDate={endDate}
+          yearsBetweenDates={yearsBetweenDates}
         />
       )}
     </MainContainer>
