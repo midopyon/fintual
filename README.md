@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# profit calculator app!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+By [Perla Peralta](mailto:perlap.03@gmail.com)
 
-## Available Scripts
+[midopyon.github.io](http://midopyon.github.io)
 
-In the project directory, you can run:
+## instructions
 
-### `yarn start`
+1. You can view the live app through its github page! Open [https://midopyon.github.io/fintual/](https://midopyon.github.io/fintual/).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. Alternatively: clone locally, install dependencies (`yarn install`) and use (`yarn start`). The app will be live at [browser](http://localhost:3000).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## discussion
 
-### `yarn test`
+- I used React and Hooks (useState, useEffect) for the main logics. I used component based design for separating the logic and front-end components.
+- The styles were added using Styled-components.
+- I used [create-react-app](https://goo.gl/26jfy4) for the main app structure.
+- Some library goodies: [react-datepicker](https://www.npmjs.com/package/react-datepicker) for the day pickers and [gh-pages](https://www.npmjs.com/package/gh-pages) for the deployment.
+- Took some inspiration from your styles in the [Fintual web](https://fintual.cl/) :3.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## requirements
 
-### `yarn build`
+### Construct a simple Portfolio class that has a collection of Stocks and a "Profit" method that receives 2 dates and returns the profit of the Portfolio between those dates. Assume each Stock has a "Price" method that receives a date and returns its price.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- The app waits for the user to pick a start date and an end date. The button will turn enabled.
+- When the button is clicked, the app renders the [ProfitResults](src/components/ProfitResults.js) component, which iterates through the stock array in the Portfolio object.
+- In the loop, I call the [getStockPricePerName](src/services/getStockPrice.js) service, which receives a name and a date and returns the price of the stock in that date (this is currently mocked up with json files).
+- I then multiply that stock price per the quantity of stocks (shares) the user holds. This value per share in a given date is then added up to the startValue/endValue temporal variables.
+- Finally, I calculate the value of the portfolio between the two dates using the [calculateProfit](src/utils/calculateProfit.js) function.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## bonus track
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Make the Profit method return the "annualized return" of the portfolio between the given dates.
 
-### `yarn eject`
+- For the annualized return formula we first need to calculate the years between the two selected dates. I used the helper function [getYearsBetweenDates](src/utils/getYearsBetweenDates.js).
+- With this value I call the [calculateAnnualizedReturn](src/utils/calculateAnnualizedReturn.js) which uses the formula found [here](https://www.wikihow.com/Calculate-Annualized-Portfolio-Return) (i double checked with a finance-savvy friend, too).
+- Please note this is also executed on the Render of the ProfitResult Component.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## scope
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+some limitations we need to keep in mind:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- If you want to calculate the profit on a new date range, please refresh the page (state cleaner button is a TODO...).
+- [getStockPricePerName](src/services/getStockPrice.js) was defined as a service, but uses mocked up prices (randomized in a period of ~1y11m). For an improvement, we could call an API and return a real result using Fetch/Axios.
+- Since i used mocked up data, I've also limited the date selectors to only show dates between (01/01/2020 and 28/11/2021).
+- The initial values are currently hardcoded in a JSON inside the [MainPage](src/containers/MainPage.js).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Hope you enjoy using this app as much as i did creating it!
