@@ -41,6 +41,7 @@ By [Perla Peralta](mailto:perlap.03@gmail.com)
 some limitations we need to keep in mind:
 
 - [getStockPricePerName](src/services/getStockPrice.js) was defined as a service, but uses mocked up prices (randomized in a period of ~1y11m). For an improvement, we could call an API and return a real result using Fetch/Axios.
+- Since i used mocked up data, I've also limited the date selectors to only show dates between (01/01/2020 and 28/11/2021).
 - The initial values are currently hardcoded in a JSON inside the [MainPage](src/containers/MainPage.js).
 
 Hope you enjoy using this app as much as i did creating it!
