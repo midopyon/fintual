@@ -2,7 +2,7 @@
 
 By [Perla Peralta](mailto:perlap.03@gmail.com)
 
-[midopyon.github.io](http://midopyon.github.io)
+[https://github.com/midopyon](http://midopyon.github.io)
 
 ## instructions
 
